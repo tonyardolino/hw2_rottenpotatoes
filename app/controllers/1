@@ -6,19 +6,28 @@ class MoviesController < ApplicationController
     # will render app/views/movies/show.<extension> by default
   end
 
+  def order
+    @movies = Movie.find(:all, :order => "params[:by]")
+  end
+
   def index
     @all_ratings = Movie.ratings
-    session[:ratings] = params[:ratings] if params[:ratings]
-    session[:sort_order] = params[:sort_order] if params[:sort_order]
-#    debugger
-    if !params[:ratings] || !params[:sort_order]
-      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+    rating = @all_ratings
+    if (defined? params[:by])
+      sort = params[:by]
+    else
+      sort = 'rating'
     end
-    if session[:ratings]
-        @movies = Movie.where("rating IN (?)", session[:ratings].keys).order(session[:sort_order])
-    else session[:sort_order]
-        @movies = Movie.scoped(:order => session[:sort_order])
+    if (defined? params[:ratings])
+      rate = params[:ratings]
+      rate = rate.keys
+      debugger
+      @movies = Movie.where("rating => ?", rate)
+    else
+      @movies = Movie.find(:all, :order => sort)
     end
+    #@movies = Movie.find(:all, :order => 'release_date')
+    #@movies = Movie.all
   end
 
   def new

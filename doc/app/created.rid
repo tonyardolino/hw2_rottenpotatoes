@@ -1,0 +1,7 @@
+Thu, 23 May 2013 07:45:28 -0700
+doc/README_FOR_APP	Wed, 22 May 2013 16:29:20 -0700
+app/models/movie.rb	Wed, 22 May 2013 16:29:20 -0700
+app/helpers/application_helper.rb	Wed, 22 May 2013 16:29:20 -0700
+app/helpers/movies_helper.rb	Wed, 22 May 2013 16:29:20 -0700
+app/controllers/application_controller.rb	Wed, 22 May 2013 16:29:20 -0700
+app/controllers/movies_controller.rb	Wed, 22 May 2013 16:29:20 -0700
