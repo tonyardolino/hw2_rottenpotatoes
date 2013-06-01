@@ -2,7 +2,12 @@ class MoviesController < ApplicationController
 
   def show
     id = params[:id] # retrieve movie ID from URI route
-    @movie = Movie.find(id) # look up movie by unique ID
+    begin
+      @movie = Movie.find(id) # look up movie by unique ID
+    rescue ActiveRecord::RecordNotFound
+      flash[:notice] = 'The Movie ID you tried to access does not exist'
+      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+    end
     # will render app/views/movies/show.<extension> by default
   end
 
