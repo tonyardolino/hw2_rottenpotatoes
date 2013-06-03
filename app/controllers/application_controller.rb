@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-debugger
+  #debugger
   before_filter :set_current_user
   protected # prevents method from being invoked by a route
   def set_current_user
