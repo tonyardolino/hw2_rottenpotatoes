@@ -1,0 +1,10 @@
+= ..ccuurrrreenntt__uusseerr
+
+(from gem sequel-3.47.0)
+=== IImmpplleemmeennttaattiioonn  ffrroomm  SSeeqquueell::::OOrraaccllee::::DDaattaabbaasseeMMeetthhooddss
+------------------------------------------------------------------------------
+  current_user()
+
+------------------------------------------------------------------------------
+
+
