@@ -1,5 +1,10 @@
 class MoviesController < ApplicationController
-
+  def movies_with_filters
+    @movies = Movie.with_good_reviews(params[:threshold])
+    %w(for_kids with_many_fans recently_reviewed).each do |filter|
+      @movies = @movies.send(filter) if params[filter]
+    end
+  end
   def show
     id = params[:id] # retrieve movie ID from URI route
     begin
@@ -18,6 +23,7 @@ class MoviesController < ApplicationController
     session[:sort_order] = params[:sort_order] if params[:sort_order]
 #    debugger
     if !params[:ratings] || !params[:sort_order]
+      params = {"ratings"=>{"G"=>"1", "PG"=>"1", "PG-13"=>"1", "R"=>"1"}, "sort_order"=>"release_date"}
       redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
     end
     if session[:ratings]
