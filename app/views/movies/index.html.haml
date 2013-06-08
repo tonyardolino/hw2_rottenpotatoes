@@ -12,7 +12,7 @@
   = check_box_tag "recently_reviewed", 1, false 
   Good Reviews
   = check_box_tag "with_good_reviews", 1, false 
-  = submit_tag 'Refresh Reviews', :id => 'movies_with_filters'
+  = submit_tag 'Reviews', :id => 'movies_with_filters'
 = form_tag movies_path, :method => :get do
   Include: 
   - @all_ratings.each do |rating|
