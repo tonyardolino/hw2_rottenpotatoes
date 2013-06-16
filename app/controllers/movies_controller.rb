@@ -1,4 +1,9 @@
 class MoviesController < ApplicationController
+  def search_tmdb
+    # hardwire to simulate failure
+    flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
+    redirect_to movies_path
+  end
   def movies_with_filters
     @movies = Movie.with_good_reviews(params[:threshold])
     %w(for_kids with_many_fans recently_reviewed).each do |filter|
@@ -24,7 +29,7 @@ class MoviesController < ApplicationController
 #    debugger
     if !params[:ratings] || !params[:sort_order]
       params = {"ratings"=>{"G"=>"1", "PG"=>"1", "PG-13"=>"1", "R"=>"1"}, "sort_order"=>"release_date"}
-      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+#      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
     end
     if session[:ratings]
         @movies = Movie.where("rating IN (?)", session[:ratings].keys).order(session[:sort_order])

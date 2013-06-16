@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'http://rubygems.org'  
 
 gem 'rails', '3.1.0'
 
@@ -8,6 +8,12 @@ gem 'rails', '3.1.0'
 group :development, :test do
   gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'sqlite3'
+  gem 'json', '~> 1.7.7'
+  gem 'cucumber-rails'
+  gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions  
+  gem 'database_cleaner' # to clear Cucumber's test database between runs
+  gem 'capybara', '2.0.2'         # lets Cucumber pretend to be a web browser
+  gem 'launchy'          # a useful debugging aid for user stories
 end
 group :production do
   gem 'pg'
