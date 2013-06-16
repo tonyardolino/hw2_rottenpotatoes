@@ -22,20 +22,26 @@ class MoviesController < ApplicationController
   end
 
   def index
+    sort = params[:sort] || session[:sort]
+    case sort
+    when 'title'
+      ordering,@title_header = {:order => :title}, 'hilite'
+    when 'release_date'
+      ordering,@date_header = {:order => :release_date}, 'hilite'
+    end
     @all_ratings = Movie.all_ratings
-    flash.keep
-    session[:ratings] = params[:ratings] if params[:ratings]
-    session[:sort_order] = params[:sort_order] if params[:sort_order]
-#    debugger
-    if !params[:ratings] || !params[:sort_order]
-      params = {"ratings"=>{"G"=>"1", "PG"=>"1", "PG-13"=>"1", "R"=>"1"}, "sort_order"=>"release_date"}
-#      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+    @selected_ratings = params[:ratings] || session[:ratings] || {}
+    
+    if @selected_ratings == {}
+      @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
-    if session[:ratings]
-        @movies = Movie.where("rating IN (?)", session[:ratings].keys).order(session[:sort_order])
-    else session[:sort_order]
-        @movies = Movie.scoped(:order => session[:sort_order])
+    
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = sort
+      session[:ratings] = @selected_ratings
+      redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
+    @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
   end
 
   def new

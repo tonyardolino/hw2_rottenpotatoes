@@ -13,19 +13,23 @@
   Good Reviews
   = check_box_tag "with_good_reviews", 1, false 
   = submit_tag 'Reviews', :id => 'movies_with_filters'
-= form_tag movies_path, :method => :get do
+
+= form_tag movies_path, :method => :get, :id => 'ratings_form' do
+  = hidden_field_tag "title_sort", true if @title_header
+  = hidden_field_tag ":release_date_sort", true if @date_header
   Include: 
   - @all_ratings.each do |rating|
     = rating
-    = check_box_tag "ratings[#{rating}]", '1', (params[:ratings] && params[:ratings][rating] == '1')
+    = check_box_tag "ratings[#{rating}]", 1, @selected_ratings.include?(rating), :id => "ratings_#{rating}"
   = submit_tag 'Refresh', :id => 'ratings_submit'
+
 %table#movies
   %thead
     %tr
-      %th No.
-      %th{:class => ("hilite" if params[:sort_order] == "title")}= link_to "Movie Title", movies_path(:sort_order =>"title"), id: 'title_header'
+      %th Id
+      %th{:class => @title_header}= link_to 'Movie Title', movies_path(:sort => 'title', :ratings => @selected_ratings), :id => 'title_header'
       %th Rating
-      %th{:class => ("hilite" if params[:sort_order] == "release_date")}=link_to "Release Date", movies_path(:sort_order =>"release_date"), id: 'release_date_header'
+      %th{:class => @date_header}= link_to 'Release Date', movies_path(:sort => 'release_date', :ratings => @selected_ratings), :id => 'release_date_header'
       %th More Info
   %tbody
     - @movies.each_with_index do |movie,count|
