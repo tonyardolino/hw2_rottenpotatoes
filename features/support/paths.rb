@@ -22,6 +22,9 @@ module NavigationHelpers
     when /^the Create New Movie\s?page$/
       '/movies/new'
 
+    when /^the Search Results\s?page$/
+      '/movies/search_tmdb'
+
     when /^the Show Movie\s?page$/
       '/movies/1'
     # Add more mappings here.
