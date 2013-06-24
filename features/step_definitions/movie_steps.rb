@@ -69,3 +69,8 @@ Then /I should see "(.*)" before "(.*)" on (.*)/ do |string1, string2, path|
   regexp = /#{string1}.*#{string2}/m #  /m means match across newlines
   page.body.should =~ regexp
 end
+
+Then /^the director of "(.+)" should be "(.+)"$/ do |movie, director|
+  step "I should see \"#{movie}\""
+  step "I should see \"#{director}\""
+end

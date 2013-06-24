@@ -1,5 +1,13 @@
 class MoviesController < ApplicationController
 
+  def similar_movie
+    if params[:director] && params[:director] != ""
+      @movies = Movie.find_all_by_director(params[:director])
+    else
+      flash[:warning] = "'#{params[:title]}' has no director info"
+      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+    end
+  end
   def search_tmdb
 #   debugger
     @movies = Movie.find_in_tmdb(params[:search_terms])

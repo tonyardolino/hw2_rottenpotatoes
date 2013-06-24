@@ -5,6 +5,7 @@ Rottenpotatoes::Application.routes.draw do
     resources :reviews
   end
   post '/movies/search_tmdb'
+  post '/movies/similar_movie'
   get 'logout' => 'sessions#destroy'
   get   '/login', :to => 'sessions#create', :as => :login
   match '/auth/:provider/callback', :to => 'sessions#create'

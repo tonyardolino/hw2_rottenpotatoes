@@ -25,8 +25,24 @@ module NavigationHelpers
     when /^the Search Results\s?page$/
       '/movies/search_tmdb'
 
-    when /^the Show Movie\s?page$/
-      '/movies/1'
+    when /^the Similar Movies page for/
+      '/movies/similar_movie'
+
+    when /^the edit page for "(.+)"$/
+      movie = Movie.find_by_title($1)
+      "/movies/#{movie.id}/edit"
+
+    when /^the details page for "(.+)"$/
+      movie = Movie.find_by_title($1)
+      "/movies/#{movie.id}"
+
+    when /Similar Movies page for "(.+)"$/
+      movie = Movie.find_by_title($1)
+      "/movies/similar_movie?:director => #{movie.director}"
+
+    when /^the Show Movie\s?page for "(.+)"$/
+      movie = Movie.find_by_title($1)
+      "/movies/#{movie.id}"
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
