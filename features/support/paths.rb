@@ -25,9 +25,6 @@ module NavigationHelpers
     when /^the Search Results\s?page$/
       '/movies/search_tmdb'
 
-    when /^the Similar Movies page for/
-      '/movies/similar_movie'
-
     when /^the edit page for "(.+)"$/
       movie = Movie.find_by_title($1)
       "/movies/#{movie.id}/edit"
@@ -36,9 +33,10 @@ module NavigationHelpers
       movie = Movie.find_by_title($1)
       "/movies/#{movie.id}"
 
-    when /Similar Movies page for "(.+)"$/
+    when /the Similar Movies page for "(.+)"$/
       movie = Movie.find_by_title($1)
-      "/movies/similar_movie?:director => #{movie.director}"
+      "/movies/similar_movie"
+#      "/movies/similar_movie(:id => #{movie.id})"
 
     when /^the Show Movie\s?page for "(.+)"$/
       movie = Movie.find_by_title($1)
