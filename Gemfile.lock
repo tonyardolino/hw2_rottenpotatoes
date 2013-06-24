@@ -171,6 +171,10 @@ GEM
       multi_json (~> 1.0)
       rubyzip
       websocket (~> 1.0.4)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -212,6 +216,7 @@ DEPENDENCIES
   ruby-debug19
   ruby-tmdb
   sass-rails (~> 3.1.0)
+  simplecov
   sqlite3
   therubyracer
   uglifier
