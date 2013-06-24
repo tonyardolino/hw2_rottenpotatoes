@@ -2,7 +2,8 @@ class MoviesController < ApplicationController
 
   def similar_movie
     @movie = Movie.find(params[:id])
-    unless @movie.director == ''
+debugger
+    unless @movie.director == nil
       @movies = Movie.find_all_by_director(@movie.director)
     else
       flash[:warning] = "'#{@movie.title}' has no director info"
