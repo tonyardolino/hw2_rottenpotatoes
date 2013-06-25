@@ -2,8 +2,7 @@ class MoviesController < ApplicationController
 
   def similar_movie
     @movie = Movie.find(params[:id])
-debugger
-    unless @movie.director == nil
+    unless @movie.director == nil || @movie.director == ''
       @movies = Movie.find_all_by_director(@movie.director)
     else
       flash[:warning] = "'#{@movie.title}' has no director info"
@@ -30,6 +29,7 @@ debugger
     id = params[:id] # retrieve movie ID from URI route
     begin
       @movie = Movie.find(id) # look up movie by unique ID
+      render(:partial => 'movie', :object => @movie) if request.xhr?
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = 'The Movie ID you tried to access does not exist'
       redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
