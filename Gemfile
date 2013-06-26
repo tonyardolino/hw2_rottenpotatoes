@@ -42,5 +42,6 @@ gem 'jquery-rails'
 
 # To use debugger
 gem 'haml'
-gem 'omniauth-twitter'
+gem 'multi_json', "~> 1.3"
+gem 'omniauth-twitter', :github => 'arunagw/omniauth-twitter'
 gem 'ruby-tmdb'
