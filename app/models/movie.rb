@@ -26,8 +26,12 @@ class Movie < ActiveRecord::Base
     having(['AVG(reviews.potatoes) > ?', threshold])
   }
   scope :for_kids, lambda {
-    Movie.where('rating in ?', %w(G PG))
+    Movie.where("rating IN (?)", ["G", "PG"])
   }
+  scope :recently_reviewed, lambda { |n|
+    Movie.joins(:reviews).where(["reviews.created_at >= (?)", n.days.ago]).uniq
+  }
+
   has_many :reviews
   before_save :capitalize_title
   def capitalize_title
