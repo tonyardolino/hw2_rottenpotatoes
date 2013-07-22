@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     @movies = Movie.find_in_tmdb(params[:search_terms])
     if @movies == [] 
       flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
-      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+      redirect_to movies_path(:sort_by => session[:sort_by], :ratings => session[:ratings])
     end
   end
 
@@ -32,13 +32,13 @@ class MoviesController < ApplicationController
       render(:partial => 'movie', :object => @movie) if request.xhr?
     rescue ActiveRecord::RecordNotFound
       flash[:notice] = 'The Movie ID you tried to access does not exist'
-      redirect_to movies_path(:sort_order => session[:sort_order], :ratings => session[:ratings])
+      redirect_to movies_path(:sort_by => session[:sort_by], :ratings => session[:ratings])
     end
     # will render app/views/movies/show.<extension> by default
   end
 
   def index
-    sort = params[:sort] || session[:sort]
+    sort = params[:sort_by] || session[:sort_by]
     case sort
     when 'title'
       ordering,@title_header = {:order => :title}, 'hilite'
@@ -52,11 +52,11 @@ class MoviesController < ApplicationController
       @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
     
-    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
-      session[:sort] = sort
+    if params[:sort_by] != session[:sort_by] or params[:ratings] != session[:ratings]
+      session[:sort_by] = sort
       session[:ratings] = @selected_ratings
       flash.keep
-      redirect_to movies_path(:sort => sort, :ratings => @selected_ratings) and return
+      redirect_to movies_path(:sort_by => sort, :ratings => @selected_ratings) and return
     end
     @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering)
   end
